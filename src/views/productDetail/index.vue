@@ -1,6 +1,5 @@
 <template>
-  <el-card>
-    <Header></Header>
+  <el-card class="bgImg">
     <div class="detailTitle">{{ productDetail.title }}</div>
     <el-row :gutter="24" class="overview">
       <el-col :span="20">
@@ -48,7 +47,6 @@
 <script setup>
 import { ref, reactive, watch, computed, onMounted } from "vue";
 import { useUserStore } from "../../stores/user.js";
-import Header from "../component/header.vue";
 import { getProductDetail, downloadFile } from "../../utils/intefaceApi.js";
 import { downloadApi } from "../../utils/index.js";
 import axios from "axios";
@@ -89,17 +87,16 @@ async function getDetail() {
 }
 async function download() {
   try {
-    const url = `/api/product/download/${productDetail.value.id}` // 下载文件的url
+    const url = `/api/product/download/${productDetail.value.id}`; // 下载文件的url
     let response = await axios({
       method: "get",
       url: url,
       responseType: "blob", // 返回类型为blob
-      headers:{
-        token:Store.userInfo.token
-      }
+      headers: {
+        token: Store.userInfo.token,
+      },
     });
     downloadApi(response);
-
   } catch (error) {
     throw error;
   }
@@ -107,6 +104,16 @@ async function download() {
 </script>
 
 <style lang="less" scoped>
+.bgImg {
+  background-image: url("../../assets/images/bg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: -moz-calc(100vh - 100px);
+  min-height: -webkit-calc(100vh - 100px);
+  min-height: calc(100vh - 100px);
+  padding: 74px 0 0 0;
+}
 .downLoad {
   display: flex;
   .loadItem {
@@ -131,17 +138,20 @@ async function download() {
   margin-bottom: 20px;
 }
 .detailTitle {
-  color: #000;
-  font-weight: 700;
-  font-size: 20px;
+  text-align: center;
+  height: 40px;
+  font-weight: 500;
+  color: rgba(16, 16, 16, 1);
+  font-size: 28px;
+  font-family: SourceHanSansSC-regular;
 }
 .viewLeft {
-  color: #000;
-  font-weight: 700;
-  font-size: 16px;
+  font-size: 14px;
+  font-family: SourceHanSansSC-regular;
   .viewTitle {
-    font-weight: 700;
     margin-bottom: 15px;
+    font-size: 14px;
+    font-family: SourceHanSansSC-regular;
   }
 }
 .imgRight {

@@ -1,6 +1,6 @@
 <template>
   <div class="loginHeader">
-    <div @click="toLogin" class="loginShow1" v-if="!store.userInfo.token">Login</div>
+    <div @click="toLogin" class="loginShow" v-if="!store.userInfo.token">Login</div>
     <div @click="toRegister" class="loginShow" v-if="!store.userInfo.token">Register</div>
     <div class="showNmae" v-else>{{ userInfo.email }}</div>
   </div>
@@ -10,12 +10,12 @@
 import { ref, reactive, watch, computed, onMounted } from "vue";
 import { useUserStore } from "../../stores/user";
 import { useRouter } from "vue-router";
-import { storeToRefs } from 'pinia'
+import { storeToRefs } from "pinia";
 const route = useRouter();
 const store = useUserStore();
 console.log(storeToRefs(store));
 const { userInfo } = storeToRefs(store);
-const  toRegister = () => {
+const toRegister = () => {
   route.push({
     path: "/register",
   });
@@ -29,6 +29,10 @@ const toLogin = () => {
 
 <style lang="less" scoped>
 .loginHeader {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  z-index: 1;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -38,34 +42,27 @@ const toLogin = () => {
   font-size: 20px;
   .loginShow {
     cursor: pointer;
-    color: #000;
-    margin-left: 20px;
-    position: relative;
-    &::before {
-      content: "";
-      width: 2px;
-      height: 19px;
-      border-radius: 12px;
-      position: absolute;
-      top: 7px;
-      left: -10px;
-      background: #000;
-    }
+    width: 104px;
+    height: 40px;
+    line-height: 40px;
+    border-radius: 25px;
+    background-color: rgba(255, 255, 255, 1);
+    color: rgba(16, 16, 16, 1);
+    font-size: 14px;
+    text-align: center;
+    font-family: Roboto;
+    border: 1px solid rgba(220, 224, 231, 1);
   }
   .loginShow:hover {
     cursor: pointer;
-    color: #409eff;
+    background-color: rgba(56, 148, 255, 1);
+    color: rgba(255, 255, 255, 1);
   }
 
   .loginShow {
     cursor: pointer;
     color: #000;
-    margin-left: 20px;
+    margin-left: 5px;
   }
-  .loginShow1:hover {
-    cursor: pointer;
-    color: #409eff;
-  }
- 
 }
 </style>
