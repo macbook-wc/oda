@@ -239,7 +239,9 @@ const submitForm = (formEl) => {
 };
 async function registerUser() {
   try {
-    let response = await register(formData);
+    let params ={ ...formData}
+    delete params['confirmPassword'];
+    let response = await register(params);
     if (response.code == 200) {
       ElMessage({
         showClose: true,
