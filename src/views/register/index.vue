@@ -117,10 +117,10 @@
               />
             </div>
           </el-form-item>
-          <div class="radioContent">
-            <div :class="isChange ? 'change' : 'noChange'">
+          <div class="radioContent"  >
+            <div :class="isChange ? 'change' : 'noChange'" @click="isChange = !isChange">
               <div></div>
-              <div @click="isChange = !isChange"></div>
+              <div ></div>
             </div>
             <div class="text">I accept the privacy policy</div>
           </div>
@@ -289,6 +289,7 @@ const toLogin = () => {
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 26px;
+  cursor: pointer;
   .noChange {
     position: relative;
     div:nth-child(1) {
@@ -305,7 +306,6 @@ const toLogin = () => {
       height: 20px;
       border-radius: 50%;
       background: #5a7bf4;
-      cursor: pointer;
     }
   }
   .change {
@@ -359,25 +359,28 @@ const toLogin = () => {
   min-height: -moz-calc(100vh - 100px);
   min-height: -webkit-calc(100vh - 100px);
   min-height: calc(100vh - 100px);
-  padding: 54px 0 0 0;
+  padding: 54px 0 20px 0;
 }
 .register {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   width: 100%;
 }
 .registerLeft {
   width: 656px;
-  margin-left: 64px;
+  margin-right: 3%;
   opacity: 0.85;
   background-color: rgba(255, 255, 255, 0.85);
   border: 1px solid rgba(187, 187, 187, 1);
   padding: 20px 16px 56px 31px;
+  border-radius: 8px;
+
 }
 .registerRight {
+  border-radius: 8px;
+  margin-left: 3%; 
   width: 527px;
-  margin-right: 12px;
   background-color: rgba(255, 255, 255, 1);
   border: 1px solid rgba(187, 187, 187, 1);
   padding: 14px 11px 35px 29px;
@@ -409,6 +412,7 @@ const toLogin = () => {
   margin-bottom: 5px;
   font-size: 20px;
   .title {
+    font-weight: 700;
     color: rgba(16, 16, 16, 1);
     font-size: 18px;
     text-align: left;
@@ -423,6 +427,7 @@ const toLogin = () => {
 }
 .registerTitle {
   color: rgba(16, 16, 16, 1);
+  font-weight: 700;
   font-size: 20px;
   text-align: left;
   font-family: SourceHanSansSC-regular;

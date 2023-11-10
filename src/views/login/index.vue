@@ -116,27 +116,26 @@ async function loginUser() {
   align-items: center;
   justify-content: flex-end;
   display: flex;
-  width: 363px;
-  padding-right: 46px;
+  width: 317px;
+  padding-right: 6px;
 }
 .btnMiddle2 {
   align-items: center;
   justify-content: flex-end;
   display: flex;
-  width: 363px;
-  padding-right: 18px;
-  margin-left: 12px;
+  width: 317px;
   height: 53px;
   line-height: 53px;
   background-color: rgba(255, 255, 255, .63);
   text-align: center;
   border: 1px solid rgba(187, 187, 187, 1);
-
+  padding-right: 6px;
+  border-radius: 5px;
   .registerBtn {
     width: 104px;
     height: 40px;
     border-radius: 40px;
-    margin-left: 32px;
+    margin-left: 12px;
   }
 }
 

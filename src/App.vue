@@ -2,12 +2,15 @@
 import { RouterView } from "vue-router";
 import Header from "./views/component/header.vue";
 import Footer from "./views/component/footer.vue";
+import BackHome from "./views/component/backHome.vue";
+
 </script>
 
 <template>
   <Header></Header>
   <div class="mainPage">
     <RouterView />
+    <BackHome></BackHome>
   </div>
   <Footer></Footer>
 </template>

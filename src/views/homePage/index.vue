@@ -13,8 +13,7 @@
     </div>
     <div class="introduction">
       <div class="mainTitle">Introduction</div>
-      <div class="text">
-        {{ homeIntroductionStr }}
+      <div class="text"  v-html="homeIntroductionStr" style="white-space:pre-wrap">
       </div>
     </div>
     <div class="lists">
@@ -207,7 +206,7 @@ onUnmounted(() => window.removeEventListener("scroll", scroll));
 }
 
 .introduction {
-  padding: 21px 157px 0px 139px;
+  padding: 41px 20% 38px ;
   .mainTitle {
     color: rgba(64, 149, 229, 1);
     font-size: 28px;
@@ -215,6 +214,7 @@ onUnmounted(() => window.removeEventListener("scroll", scroll));
     font-family: SourceHanSansSC-bold;
     height: 62px;
     margin-bottom: 7px;
+    font-weight: 700;
   }
   .text {
     color: rgba(64, 149, 229, 1);
@@ -225,9 +225,10 @@ onUnmounted(() => window.removeEventListener("scroll", scroll));
   }
 }
 .lists {
-  padding: 37px 157px 38px 139px;
+  padding: 41px 20% 38px ;
   position: relative;
   .mainTitle {
+    font-weight: 700;
     color: rgba(64, 149, 229, 1);
     font-size: 28px;
     text-align: left;
