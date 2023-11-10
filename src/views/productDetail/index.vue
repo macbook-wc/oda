@@ -51,12 +51,13 @@ import { getProductDetail, downloadFile } from "../../utils/intefaceApi.js";
 import { downloadApi } from "../../utils/index.js";
 import axios from "axios";
 const Store = useUserStore();
-import { useRouter } from "vue-router";
-const route = useRouter();
+import { useRouter,useRoute } from "vue-router";
+const router = useRouter();
+const route = useRoute();
+console.log(route.name,"route")
+Store.routeName = route.name
 const productDetail = ref([]);
-let productId = ref(route.currentRoute.value.query.productId);
-console.log(productId, "productId");
-
+let productId = ref(router.currentRoute.value.query.productId);
 onMounted(() => {
   getDetail();
 });
@@ -69,7 +70,7 @@ const isLogin = (item) => {
       duration: 1500,
     });
     setTimeout(() => {
-      route.push({
+      router.push({
         path: "/login",
       });
     }, 1500);
@@ -122,7 +123,7 @@ async function download() {
   }
   .downItem {
     text-decoration: none;
-    color: hsla(160, 100%, 37%, 1);
+    color: rgba(16, 16, 16, 1);
     transition: 0.4s;
     cursor: pointer;
   }

@@ -56,9 +56,12 @@
 import { ref, reactive, watch, computed, onMounted } from "vue";
 import { login } from "../../utils/intefaceApi.js";
 import { useUserStore } from "../../stores/user.js";
-import { useRouter } from "vue-router";
-const route = useRouter();
-const store = useUserStore();
+import { useRouter,useRoute } from "vue-router";
+const router = useRouter();
+const route = useRoute();
+const Store = useUserStore();
+Store.routeName = route.name
+console.log(route.name,"route")
 const formData = reactive({
   email: "",
   password: "",
@@ -78,7 +81,7 @@ const submitForm = (formEl) => {
 };
 
 const toRegister = () => {
-  route.push({
+  router.push({
     path: "/register",
   });
 };
@@ -86,7 +89,7 @@ async function loginUser() {
   try {
     let response = await login(formData);
     if (response.code == 200) {
-      store.$patch((state) => {
+      Store.$patch((state) => {
         state.userInfo.token = response.data;
         state.userInfo.email = formData.email;
       });
@@ -97,7 +100,7 @@ async function loginUser() {
         duration: 1500,
       });
       setTimeout(() => {
-        route.push({
+        router.push({
           path: "/",
         });
       }, 1500);

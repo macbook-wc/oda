@@ -28,7 +28,7 @@
             <!-- <div class="title">{{ item.title }}</div> -->
             <div class="contentText">{{ item.info }}</div>
             <div class="contentText">{{ item.overview }}</div>
-            <div @click="down" class="loadItem">
+            <div @click.stop ="isLogin(item)" class="loadItem">
               <div class="loadIcon">
                 <div class="svg">
                   <img src="@/assets/load.png" alt="">
@@ -45,16 +45,22 @@
 <script setup>
 // import {getAssetsFile} from "../../utils/index.js";
 import { ref, onMounted, onUnmounted } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter,useRoute } from "vue-router";
 import { getHomepageInfo } from "../../utils/intefaceApi.js";
-
-const route = useRouter();
+import { useUserStore } from "../../stores/user.js";
+import { downloadApi } from "../../utils/index.js";
+import axios from "axios";
+const Store = useUserStore();
+const router = useRouter();
+const route = useRoute();
+console.log(route.name,"route")
+Store.routeName = route.name
 let homeImages = ref([]);
 let odaProducts = ref([]);
 let homeIntroductionStr = ref();
 
 const toDetail = (item) => {
-  route.push({
+  router.push({
     path: "/productDetail",
     query: {
       productId: item.id,
@@ -66,7 +72,39 @@ const jumpBanner = (item) => {
   if (!item.jumpUrl) return;
   window.location.href = item.jumpUrl;
 };
-
+const isLogin = (item) => {
+  if (!Store.userInfo.token) {
+    ElMessage({
+      showClose: true,
+      message: "Warning, pleace login",
+      type: "warning",
+      duration: 1500,
+    });
+    setTimeout(() => {
+      router.push({
+        path: "/login",
+      });
+    }, 1500);
+  } else {
+    download(item);
+  }
+};
+async function download(item) {
+  try {
+    const url = `/api/product/download/${item.id}`; // 下载文件的url
+    let response = await axios({
+      method: "get",
+      url: url,
+      responseType: "blob", // 返回类型为blob
+      headers: {
+        token: Store.userInfo.token,
+      },
+    });
+    downloadApi(response);
+  } catch (error) {
+    throw error;
+  }
+}
 const scroll = () => {
   const scrollHeight = document.documentElement.scrollHeight; // 可滚动区域的高
   const scrollTop = document.documentElement.scrollTop; // 已经滚动区域的高

@@ -7,12 +7,13 @@ export const useUserStore = defineStore(
       token:"",
       email:""
     });
-    return { userInfo};
+    const routeName = ref()
+    return { userInfo,routeName};
   },
   {
     persist: {
       enabled: true,
-      strategies: [{ storage: sessionStorage, paths: ['userInfo'] }]
+      strategies: [{ storage: sessionStorage, paths: ['userInfo','routeName'] }]
     }
   }
 );

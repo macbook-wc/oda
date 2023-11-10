@@ -1,7 +1,7 @@
 <template>
   <div class="loginHeader">
-    <div @click="toLogin" class="loginShow" v-if="!store.userInfo.token">Login</div>
-    <div @click="toRegister" class="loginShow" v-if="!store.userInfo.token">Register</div>
+    <div @click="toLogin" class="loginShow" v-if="!Store.userInfo.token && routeName !== 'login'">Login</div>
+    <div @click="toRegister" class="loginShow" v-if="!Store.userInfo.token && routeName !== 'register'">Register</div>
     <div class="showNmae" v-else>{{ userInfo.email }}</div>
   </div>
 </template>
@@ -9,19 +9,21 @@
 <script setup>
 import { ref, reactive, watch, computed, onMounted } from "vue";
 import { useUserStore } from "../../stores/user";
-import { useRouter } from "vue-router";
+import { useRouter} from "vue-router";
 import { storeToRefs } from "pinia";
-const route = useRouter();
-const store = useUserStore();
-console.log(storeToRefs(store));
-const { userInfo } = storeToRefs(store);
+const router = useRouter();
+const Store = useUserStore();
+const { userInfo , routeName } = storeToRefs(Store);
+
+
+//在选项参数中指定 immediate: true 将立即以表达式的当前值触发回调：
 const toRegister = () => {
-  route.push({
+  router.push({
     path: "/register",
   });
 };
 const toLogin = () => {
-  route.push({
+  router.push({
     path: "/login",
   });
 };
