@@ -30,8 +30,8 @@ const toLogin = () => {
 <style lang="less" scoped>
 .loginHeader {
   position: absolute;
-  right: 5px;
-  top: 5px;
+  right: 22px;
+  top: 12px;
   z-index: 1;
   display: flex;
   justify-content: flex-end;
@@ -62,7 +62,7 @@ const toLogin = () => {
   .loginShow {
     cursor: pointer;
     color: #000;
-    margin-left: 5px;
+    margin-left: 13px;
   }
 }
 </style>

@@ -31,32 +31,8 @@
             <div @click="down" class="loadItem">
               <div class="loadIcon">
                 <div class="svg">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    viewBox="0 0 48 48"
-                    width="53"
-                    height="53"
-                    style="
-                      border-color: rgba(0, 0, 0, 0);
-                      border-width: bpx;
-                      border-style: undefined;
-                    "
-                    filter="none"
-                  >
-                    <g>
-                      <path
-                        d="M5 24L24 42L43 24H31V6H17V24H5Z"
-                        fill="none"
-                        stroke="rgba(214.965,171.10500000000002,6.885,1)"
-                        stroke-width="4"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      ></path>
-                    </g>
-                  </svg>
+                  <img src="@/assets/load.png" alt="">
                 </div>
-
                 <div class="loadBtn">Download</div>
               </div>
             </div>

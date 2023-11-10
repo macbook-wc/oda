@@ -1,8 +1,8 @@
 <template>
   <el-card class="bgImg">
-    <div class="detailTitle">{{ productDetail.title }}</div>
+    <div class="detailTitle">ODA-{{ productDetail.title }}</div>
     <el-row :gutter="24" class="overview">
-      <el-col :span="20">
+      <el-col :span="18">
         <div class="viewLeft">
           <div class="viewTitle">Overview</div>
           <div class="viewContent">
@@ -10,12 +10,12 @@
           </div>
         </div>
       </el-col>
-      <el-col :span="4">
+      <el-col :span="6">
         <img class="imgRight" :src="productDetail.overviewImg" alt="" />
       </el-col>
     </el-row>
     <el-row :gutter="24" class="overview">
-      <el-col :span="22">
+      <el-col :span="18">
         <div class="viewLeft">
           <div class="viewTitle">Details</div>
           <div class="viewContent">
@@ -24,7 +24,7 @@
         </div>
       </el-col>
       <el-col :span="2">
-        <img class="imgSmall" :src="productDetail.imgUrl" alt="" />
+        <!-- <img class="imgSmall" :src="productDetail.imgUrl" alt="" /> -->
       </el-col>
     </el-row>
     <el-row :gutter="24" class="overview">
@@ -33,7 +33,7 @@
           <div class="viewTitle">Data access and cite</div>
           <div class="downloadList">
             <div class="downLoad">
-              <div class="loadItem">download:</div>
+              <div class="loadItem">Platform 1:</div>
               <div class="downItem" @click="isLogin()">{{ productDetail.title }}</div>
             </div>
           </div>
@@ -112,7 +112,7 @@ async function download() {
   min-height: -moz-calc(100vh - 100px);
   min-height: -webkit-calc(100vh - 100px);
   min-height: calc(100vh - 100px);
-  padding: 74px 0 0 0;
+  padding: 54px 0 0 0;
 }
 .downLoad {
   display: flex;
@@ -128,14 +128,12 @@ async function download() {
   }
 }
 .viewDio {
-  color: #000;
-  font-weight: 700;
-  font-size: 20px;
-  margin-top: 25px;
+  color: rgba(16, 16, 16, 1);
+  font-size: 14px;
+  font-family: SourceHanSansSC-regular;
+  margin-top: 10px;
 }
 .overview {
-  padding: 15px;
-  margin-bottom: 20px;
 }
 .detailTitle {
   text-align: center;
@@ -144,19 +142,25 @@ async function download() {
   color: rgba(16, 16, 16, 1);
   font-size: 28px;
   font-family: SourceHanSansSC-regular;
+  margin-bottom: 79px;
 }
 .viewLeft {
   font-size: 14px;
   font-family: SourceHanSansSC-regular;
+  color: rgba(16, 16, 16, 1);
   .viewTitle {
-    margin-bottom: 15px;
+    margin: 15px 0;
     font-size: 14px;
     font-family: SourceHanSansSC-regular;
   }
+  .viewContent {
+    line-height: 2.4;
+    margin-right: 154px;
+  }
 }
 .imgRight {
-  width: 130px;
-  height: 130px;
+  width: 171px;
+  height: 183px;
 }
 .imgSmall {
   width: 90px;
