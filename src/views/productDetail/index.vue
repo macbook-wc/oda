@@ -52,7 +52,6 @@ const Store = useUserStore();
 import { useRouter,useRoute } from "vue-router";
 const router = useRouter();
 const route = useRoute();
-console.log(route.name,"route")
 Store.routeName = route.name
 const productDetail = ref([]);
 let productId = ref(router.currentRoute.value.query.productId);

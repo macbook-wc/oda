@@ -8,7 +8,7 @@ const router = createRouter({
       name: 'homePage',
       component:  () => import('../views/homePage/index.vue'),
       meta:{
-        title:"homePage"
+        title:"ODA-homePage"
       }
     },
     {
@@ -16,7 +16,7 @@ const router = createRouter({
       name: 'login',
       component: () => import('../views/login/index.vue'),
       meta:{
-        title:"login"
+        title:"ODA-login"
       }
     },
     {
@@ -24,7 +24,7 @@ const router = createRouter({
       name: 'register',
       component: () => import('../views/register/index.vue'),
       meta:{
-        title:"register"
+        title:"ODA-register"
       }
     },
     {
@@ -32,7 +32,7 @@ const router = createRouter({
       name: 'productDetail',
       component: () => import('../views/productDetail/index.vue'),
       meta:{
-        title:"productDetail"
+        title:"ODA-productDetail"
       }
     }
   ]

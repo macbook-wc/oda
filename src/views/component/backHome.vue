@@ -1,13 +1,18 @@
 <template>
-  <div class="backHome" @click="jumpHome">
+  <div  v-if= "routeName !== 'homePage'" class="backHome" @click="jumpHome">
     <el-icon><HomeFilled /></el-icon>
     <span>Home</span>
   </div>
 </template>
 
 <script setup>
+
+import { useUserStore } from "../../stores/user.js";
+const Store = useUserStore()
 import { useRouter} from "vue-router";
 import { storeToRefs } from "pinia";
+const {  routeName } = storeToRefs(Store);
+console.log(routeName,"routeName");
 const router = useRouter();
 const jumpHome = ()=>{
   router.push("/")
