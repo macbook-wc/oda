@@ -72,7 +72,10 @@ const isLogin = (item) => {
       });
     }, 1500);
   } else {
-    download(item);
+    const url = `/api/product/download/${productDetail.value.id}`; // 下载文件的url
+     downloadFile(url).then(res=>{
+      downloadApi(res);
+    });
   }
 };
 async function getDetail() {
@@ -80,22 +83,6 @@ async function getDetail() {
     let response = await getProductDetail({ id: productId.value });
     productDetail.value = response.data;
     console.log(productDetail.value.details);
-  } catch (error) {
-    throw error;
-  }
-}
-async function download() {
-  try {
-    const url = `/api/product/download/${productDetail.value.id}`; // 下载文件的url
-    let response = await axios({
-      method: "get",
-      url: url,
-      responseType: "blob", // 返回类型为blob
-      headers: {
-        token: Store.userInfo.token,
-      },
-    });
-    downloadApi(response);
   } catch (error) {
     throw error;
   }

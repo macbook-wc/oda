@@ -45,10 +45,9 @@
 // import {getAssetsFile} from "../../utils/index.js";
 import { ref, onMounted, onUnmounted } from "vue";
 import { useRouter,useRoute } from "vue-router";
-import { getHomepageInfo } from "../../utils/intefaceApi.js";
+import { getHomepageInfo , downloadFile} from "../../utils/intefaceApi.js";
 import { useUserStore } from "../../stores/user.js";
 import { downloadApi } from "../../utils/index.js";
-import axios from "axios";
 const Store = useUserStore();
 const router = useRouter();
 const route = useRoute();
@@ -85,25 +84,12 @@ const isLogin = (item) => {
       });
     }, 1500);
   } else {
-    download(item);
+    const url = `/api/product/download/${item.id}`; // 下载文件的url
+     downloadFile(url).then(res=>{
+      downloadApi(res);
+    });
   }
 };
-async function download(item) {
-  try {
-    const url = `/api/product/download/${item.id}`; // 下载文件的url
-    let response = await axios({
-      method: "get",
-      url: url,
-      responseType: "blob", // 返回类型为blob
-      headers: {
-        token: Store.userInfo.token,
-      },
-    });
-    downloadApi(response);
-  } catch (error) {
-    throw error;
-  }
-}
 const scroll = () => {
   const scrollHeight = document.documentElement.scrollHeight; // 可滚动区域的高
   const scrollTop = document.documentElement.scrollTop; // 已经滚动区域的高

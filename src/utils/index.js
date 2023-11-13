@@ -11,6 +11,7 @@ export const localGet = (key) => {
   }
 };
 export const downloadApi = (res) => {
+  debugger
   // 从content-disposition拿到后端返回的filename，并用decodeURI解码，防止乱码
   let fileName = decodeURI(res.headers['content-disposition'].split('=')[1]);
   const bolb = new Blob([res.data], { type: "" })
