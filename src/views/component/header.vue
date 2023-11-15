@@ -1,5 +1,5 @@
 <template>
-  <div class="loginHeader">
+  <div :class="routeName == 'homePage' ? 'loginHeader notHome'  : 'loginHeader isHome'">
     <div @click="toLogin" class="loginShow" v-if="!Store.userInfo.token && routeName !== 'login'">Login</div>
     <div @click="toRegister" class="loginShow" v-if="!Store.userInfo.token && routeName !== 'register'">Register</div>
     <div class="showNmae" v-else>{{ userInfo.email }}</div>
@@ -30,9 +30,14 @@ const toLogin = () => {
 </script>
 
 <style lang="less" scoped>
+.isHome{
+  right: 6%;
+}
+.notHome{
+  right: 13%;
+}
 .loginHeader {
   position: absolute;
-  right: 13%;
   top: 12px;
   z-index: 1;
   display: flex;

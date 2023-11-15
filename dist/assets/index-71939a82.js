@@ -1,1 +1,0 @@
-const n=o=>{let t=decodeURI(o.headers["content-disposition"].split("=")[1]);const d=new Blob([o.data],{type:""});if("download"in document.createElement("a")){const e=document.createElement("a");e.download=t,e.style.display="none",e.href=URL.createObjectURL(d),document.body.appendChild(e),e.click(),URL.revokeObjectURL(e.href),document.body.removeChild(e)}};export{n as d};
