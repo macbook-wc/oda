@@ -144,12 +144,9 @@
 </template>
 
 <script setup>
-import { ref, reactive,watch } from "vue";
-import axios from "axios";
 import { useUserStore } from "../../stores/user.js";
 import { register } from "../../utils/intefaceApi.js";
 const Store = useUserStore();
-import { useRouter,useRoute } from "vue-router";
 let isChange = ref(false);
 const router = useRouter();
 const route = useRoute();

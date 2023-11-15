@@ -43,8 +43,6 @@
 </template>
 <script setup>
 // import {getAssetsFile} from "../../utils/index.js";
-import { ref, onMounted, onUnmounted } from "vue";
-import { useRouter,useRoute } from "vue-router";
 import { getHomepageInfo , downloadFile} from "../../utils/intefaceApi.js";
 import { useUserStore } from "../../stores/user.js";
 import { downloadApi } from "../../utils/index.js";

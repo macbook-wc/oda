@@ -7,9 +7,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, watch, computed, onMounted } from "vue";
 import { useUserStore } from "../../stores/user";
-import { useRouter} from "vue-router";
 import { storeToRefs } from "pinia";
 const router = useRouter();
 const Store = useUserStore();

@@ -60,13 +60,10 @@
 </template>
 
 <script setup>
-import { ref, reactive, watch, computed, onMounted } from "vue";
 import { useUserStore } from "../../stores/user.js";
 import { getProductDetail, downloadFile } from "../../utils/intefaceApi.js";
 import { downloadApi } from "../../utils/index.js";
-import axios from "axios";
 const Store = useUserStore();
-import { useRouter, useRoute } from "vue-router";
 const router = useRouter();
 const route = useRoute();
 Store.routeName = route.name;

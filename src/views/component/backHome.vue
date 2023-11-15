@@ -9,10 +9,8 @@
 
 import { useUserStore } from "../../stores/user.js";
 const Store = useUserStore()
-import { useRouter} from "vue-router";
 import { storeToRefs } from "pinia";
 const {  routeName } = storeToRefs(Store);
-console.log(routeName,"routeName");
 const router = useRouter();
 const jumpHome = ()=>{
   router.push("/")
