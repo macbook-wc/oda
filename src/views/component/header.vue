@@ -32,7 +32,7 @@ const toLogin = () => {
 <style lang="less" scoped>
 .loginHeader {
   position: absolute;
-  right: 22px;
+  right: 13%;
   top: 12px;
   z-index: 1;
   display: flex;

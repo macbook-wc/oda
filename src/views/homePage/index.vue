@@ -27,14 +27,14 @@
             <!-- <div class="title">{{ item.title }}</div> -->
             <div class="contentText">{{ item.info }}</div>
             <div class="contentText">{{ item.overview }}</div>
-            <div @click.stop ="isLogin(item)" class="loadItem">
+            <!-- <div @click.stop ="isLogin(item)" class="loadItem">
               <div class="loadIcon">
                 <div class="svg">
                   <img src="@/assets/load.png" alt="">
                 </div>
                 <div class="loadBtn">Download</div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -234,7 +234,7 @@ onUnmounted(() => window.removeEventListener("scroll", scroll));
   /* width: 1200px; */
 }
 .el-carousel__item img {
-  width: 100%;
+  width: 75%;
   height: 100%;
   color: #475669;
   margin: 0;
@@ -244,7 +244,7 @@ onUnmounted(() => window.removeEventListener("scroll", scroll));
 /* 左箭头 */
 :deep(.el-carousel__arrow--left) {
   top: 150px;
-  left: 0px;
+  left: 13%;
   font-size: 24px;
   font-weight: 900;
   color: greenyellow;
@@ -257,7 +257,7 @@ onUnmounted(() => window.removeEventListener("scroll", scroll));
 /* 右箭头 */
 :deep(.el-carousel__arrow--right) {
   top: 150px;
-  right: 0;
+  right: 13%;
   font-size: 24px;
   color: greenyellow;
 }

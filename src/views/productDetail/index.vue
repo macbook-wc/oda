@@ -1,44 +1,61 @@
 <template>
   <div class="bgImg">
-    <div class="detailTitle">ODA-{{ productDetail.title }}</div>
-    <el-row :gutter="24" class="overview">
-      <el-col :span="18">
-        <div class="viewLeft">
-          <div class="viewTitle">Overview</div>
-          <div class="viewContent" v-text="productDetail.overview" style="white-space:pre-wrap">
+    <el-card class="cardTop">
+      <div class="detailTitle">ODA-{{ productDetail.title }}</div>
+      <el-row :gutter="24" class="overview">
+        <el-col :span="18">
+          <div class="viewLeft">
+            <div class="viewTitle">Overview</div>
+            <div
+              class="viewContent"
+              v-text="productDetail.overview"
+              style="white-space: pre-wrap"
+            ></div>
           </div>
-        </div>
-      </el-col>
-      <el-col :span="6">
-        <img class="imgRight" :src="productDetail.overviewImg" alt="" />
-      </el-col>
-    </el-row>
-    <el-row :gutter="24" class="overview">
-      <el-col :span="18">
-        <div class="viewLeft">
-          <div class="viewTitle">Details</div>
-          <div class="viewContent" v-html="productDetail.details" style="white-space:pre-wrap">
+        </el-col>
+        <el-col :span="6">
+          <img class="imgRight" :src="productDetail.overviewImg" alt="" />
+        </el-col>
+      </el-row>
+    </el-card>
+    <el-card class="cardTop">
+      <el-row :gutter="24" class="overview">
+        <el-col :span="18">
+          <div class="viewLeft">
+            <div class="viewTitle">Details</div>
+            <div
+              class="viewContent"
+              v-html="productDetail.details"
+              style="white-space: pre-wrap"
+            ></div>
           </div>
-        </div>
-      </el-col>
-      <el-col :span="2">
-        <!-- <img class="imgSmall" :src="productDetail.imgUrl" alt="" /> -->
-      </el-col>
-    </el-row>
-    <el-row :gutter="24" class="overview">
-      <el-col :span="24">
-        <div class="viewLeft">
-          <div class="viewTitle">Data access and cite</div>
-          <div class="downloadList">
-            <div class="downLoad">
-              <div class="loadItem">Platform 1:</div>
-              <div class="downItem" @click="isLogin()" v-text="productDetail.title"></div>
+        </el-col>
+        <el-col :span="2">
+          <!-- <img class="imgSmall" :src="productDetail.imgUrl" alt="" /> -->
+        </el-col>
+      </el-row>
+    </el-card>
+
+    <el-card class="cardTop">
+      <el-row :gutter="24" class="overview">
+        <el-col :span="24">
+          <div class="viewLeft">
+            <div class="viewTitle">Data access and cite</div>
+            <div class="downloadList">
+              <div class="downLoad" v-for="(item, index) in downLoadList" :key="index">
+                <div class="loadItem">Platform {{ index + 1 }}:</div>
+                <div
+                  class="downItem"
+                  @click="isLogin(item)"
+                  v-text="item.downloadTitle"
+                ></div>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="viewDio">DOI: {{ productDetail.doi }}</div>
-      </el-col>
-    </el-row>
+          <div class="viewDio">DOI: {{ productDetail.doi }}</div>
+        </el-col>
+      </el-row>
+    </el-card>
   </div>
 </template>
 
@@ -49,11 +66,12 @@ import { getProductDetail, downloadFile } from "../../utils/intefaceApi.js";
 import { downloadApi } from "../../utils/index.js";
 import axios from "axios";
 const Store = useUserStore();
-import { useRouter,useRoute } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 const router = useRouter();
 const route = useRoute();
-Store.routeName = route.name
+Store.routeName = route.name;
 const productDetail = ref([]);
+const downLoadList = ref([]);
 let productId = ref(router.currentRoute.value.query.productId);
 onMounted(() => {
   getDetail();
@@ -72,8 +90,8 @@ const isLogin = (item) => {
       });
     }, 1500);
   } else {
-    const url = `/api/product/download/${productDetail.value.id}`; // 下载文件的url
-     downloadFile(url).then(res=>{
+    const url = `/api/product/download/${item.id}`; // 下载文件的url
+    downloadFile(url).then((res) => {
       downloadApi(res);
     });
   }
@@ -82,7 +100,8 @@ async function getDetail() {
   try {
     let response = await getProductDetail({ id: productId.value });
     productDetail.value = response.data;
-    console.log(productDetail.value.details);
+    downLoadList.value = response.data.productDownloadUrlVOList;
+    console.log(productDetail);
   } catch (error) {
     throw error;
   }
@@ -90,11 +109,16 @@ async function getDetail() {
 </script>
 
 <style lang="less" scoped>
+.cardTop{
+  margin-top: 20px;
+
+}
+
 .bgImg {
-  background-image: url("../../assets/images/bg.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  min-height: calc(100vh - 100px);
+  // background-image: url("../../assets/images/bg.png");
+  // background-size: cover;
+  // background-repeat: no-repeat;
+  // min-height: calc(100vh - 100px);
   padding: 54px 20%;
 }
 .downLoad {
@@ -146,7 +170,6 @@ async function getDetail() {
   height: 183px;
   margin-top: 35px;
   margin-left: 3%;
-
 }
 .imgSmall {
   width: 90px;
