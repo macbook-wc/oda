@@ -4,6 +4,7 @@ import Header from "./views/component/header.vue";
 import Footer from "./views/component/footer.vue";
 import BackHome from "./views/component/backHome.vue";
 
+
 </script>
 
 <template>
