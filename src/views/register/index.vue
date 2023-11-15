@@ -132,6 +132,7 @@
               @click="submitForm(formRef)"
               >Register</el-button
             >
+            
           </el-form-item>
           <div class="registerBottom">
             <div class="text">Or I Have an Account</div>
@@ -144,6 +145,10 @@
 </template>
 
 <script setup>
+
+
+
+
 import { useUserStore } from "../../stores/user.js";
 import { register } from "../../utils/intefaceApi.js";
 const Store = useUserStore();
