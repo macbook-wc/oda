@@ -31,7 +31,7 @@
           </div>
         </el-col>
         <el-col :span="2">
-          <!-- <img class="imgSmall" :src="productDetail.imgUrl" alt="" /> -->
+          <img class="imgSmall" :src="productDetail.imgUrl" alt="" />
         </el-col>
       </el-row>
     </el-card>

@@ -5,15 +5,17 @@ export const useUserStore = defineStore(
   () => {
     const userInfo = reactive({
       token:"",
-      email:""
+      email:"",
     });
     const routeName = ref()
-    return { userInfo,routeName};
+    const homeTeams = ref([])
+
+    return { userInfo,routeName,homeTeams};
   },
   {
     persist: {
       enabled: true,
-      strategies: [{ storage: sessionStorage, paths: ['userInfo','routeName'] }]
+      strategies: [{ storage: sessionStorage, paths: ['userInfo','routeName','homeTeams'] }]
     }
   }
 );

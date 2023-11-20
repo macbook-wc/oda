@@ -41,8 +41,8 @@
     <div class="lists">
       <div class="mainTitle">Team</div>
       <div class="itemTeam" >
-        <div class="itemLeft" v-for="index in 6" :key="index">
-          <img src="../../assets/images/1.1.png" @click="router.push({ path: '/teamPage'})" alt="" />
+        <div class="itemLeft" v-for="(item,index) in homeTeams" :key="index">
+          <img :src="item.url" @click="router.push({ path: '/teamPage'})" alt="" />
         </div>
       </div>
     </div>
@@ -56,10 +56,11 @@ import { downloadApi } from "../../utils/index.js";
 const Store = useUserStore();
 const router = useRouter();
 const route = useRoute();
-console.log(route.name, "route");
 Store.routeName = route.name;
 let homeImages = ref([]);
 let odaProducts = ref([]);
+let homeTeams = ref([]);
+
 let homeIntroductionStr = ref();
 
 const toDetail = (item) => {
@@ -75,26 +76,7 @@ const jumpBanner = (item) => {
   if (!item.jumpUrl) return;
   window.location.href = item.jumpUrl;
 };
-const isLogin = (item) => {
-  if (!Store.userInfo.token) {
-    ElMessage({
-      showClose: true,
-      message: "Warning, pleace login",
-      type: "warning",
-      duration: 1500,
-    });
-    setTimeout(() => {
-      router.push({
-        path: "/login",
-      });
-    }, 1500);
-  } else {
-    const url = `/api/product/download/${item.id}`; // 下载文件的url
-    downloadFile(url).then((res) => {
-      downloadApi(res);
-    });
-  }
-};
+
 const scroll = () => {
   const scrollHeight = document.documentElement.scrollHeight; // 可滚动区域的高
   const scrollTop = document.documentElement.scrollTop; // 已经滚动区域的高
@@ -116,6 +98,8 @@ async function fetchData() {
     homeImages.value = response.data.homeImages;
     homeIntroductionStr.value = response.data.homeIntroductionStr;
     odaProducts.value = response.data.odaProducts;
+    homeTeams.value = response.data.homeTeams;
+    Store.homeTeams = response.data.homeTeams;
   } catch (error) {
     console.error("An error occurred:", error);
     throw error;

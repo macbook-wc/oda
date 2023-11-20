@@ -3,22 +3,18 @@
     <el-card>
       <div class="lists">
         <div class="mainTitle">Team</div>
-        <div class="itemTeam" v-for="index in 6" :key="index">
+        <div class="itemTeam" v-for="(item,index) in homeTeams" :key="index">
           <el-card class="teams" style="width: 100%">
             <div class="team">
               <div class="itemLeft">
                 <img
-                  src="../../assets/images/1.1.png"
-                  @click="router.push({ path: '/teamPage' })"
+                  :src="item.url"
                   alt=""
                 />
               </div>
               <div class="itemRight">
-                <div class="name">Zhaohui Chen</div>
-                <div class="country">Ocean University of China</div>
-                <div class="country">Principal Investigator</div>
-                <div class="country">chenzhaohui@ouc.edu.cn</div>
-                <div class="country">Homepage</div>
+                <div class="name" >{{ item.name }}</div>
+                <div class="country" v-html="item.info" style="white-space: pre-wrap"></div>
               </div>
             </div>
           </el-card>
@@ -30,9 +26,11 @@
 
 <script setup>
 import { useUserStore } from "../../stores/user.js";
+import { storeToRefs } from "pinia";
 const Store = useUserStore();
 const route = useRoute();
 Store.routeName = route.name;
+const { homeTeams } = storeToRefs(Store);
 onMounted(() => {});
 </script>
 
