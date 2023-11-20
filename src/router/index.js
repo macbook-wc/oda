@@ -34,6 +34,14 @@ const router = createRouter({
       meta:{
         title:"ODA-productDetail"
       }
+    },
+    {
+      path: '/teamPage',
+      name: 'teamPage',
+      component: () => import('../views/teamPage/index.vue'),
+      meta:{
+        title:"ODA-teamPage"
+      }
     }
   ]
 })

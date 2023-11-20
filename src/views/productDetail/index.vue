@@ -56,6 +56,24 @@
         </el-col>
       </el-row>
     </el-card>
+    <el-card class="cardTop">
+      <el-row :gutter="24" class="overview">
+        <el-col :span="24">
+          <div class="viewLeft">
+            <div class="viewTitle">Publications</div>
+            <div class="downloadList">
+              <div class="downLoad" v-for="(item, index) in 3" :key="index">
+                <div class="loadItem1"> {{ index + 1 }}:</div>
+                <div
+                  class="downItem1"
+                  
+                >XXXXXX</div>
+              </div>
+            </div>
+          </div>
+        </el-col>
+      </el-row>
+    </el-card>
   </div>
 </template>
 
@@ -124,11 +142,18 @@ async function getDetail() {
     margin-right: 15px;
     width: 80px;
   }
+  .loadItem1 {
+    margin-right: 15px;
+  }
   .downItem {
     text-decoration: none;
     color: #3894ff;
     transition: 0.4s;
     cursor: pointer;
+  }
+  .downItem {
+    text-decoration: none;
+    transition: 0.4s;
   }
 }
 .viewDio {

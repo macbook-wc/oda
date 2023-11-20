@@ -1,13 +1,6 @@
 <template>
   <div class="loginPage">
     <div class="register">
-      <div class="registerLeft">
-        <div class="registerTitle">Privacy Pohcy</div>
-        <div v-for="(item, index) in registerText" :key="index" class="registerText">
-          <div class="title">{{ item.title }}</div>
-          <div class="content">{{ item.content }}</div>
-        </div>
-      </div>
       <div class="registerRight">
         <div class="registerForm">
           <el-icon class="icons"><WarningFilled /></el-icon>
@@ -140,6 +133,14 @@
           </div>
         </el-form>
       </div>
+      <div class="registerLeft">
+        <div class="registerTitle">Privacy Pohcy</div>
+        <div v-for="(item, index) in registerText" :key="index" class="registerText">
+          <div class="title">{{ item.title }}</div>
+          <div class="content">{{ item.content }}</div>
+        </div>
+      </div>
+      
     </div>
   </div>
 </template>
@@ -373,7 +374,7 @@ const toLogin = () => {
 }
 .registerLeft {
   width: 656px;
-  margin-right: 3%;
+  margin-left: 3%;
   opacity: 0.85;
   background-color: rgba(255, 255, 255, 0.85);
   border: 1px solid rgba(187, 187, 187, 1);
@@ -383,7 +384,7 @@ const toLogin = () => {
 }
 .registerRight {
   border-radius: 8px;
-  margin-left: 3%; 
+  margin-right: 3%; 
   width: 527px;
   background-color: rgba(255, 255, 255, 1);
   border: 1px solid rgba(187, 187, 187, 1);

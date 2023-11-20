@@ -1,5 +1,5 @@
 <template>
-  <el-card >
+  <el-card>
     <div class="block text-center" style="text-align: center">
       <el-carousel>
         <el-carousel-item
@@ -13,8 +13,7 @@
     </div>
     <div class="introduction">
       <div class="mainTitle">Introduction</div>
-      <div class="text"  v-html="homeIntroductionStr" style="white-space:pre-wrap">
-      </div>
+      <div class="text" v-html="homeIntroductionStr" style="white-space: pre-wrap"></div>
     </div>
     <div class="lists">
       <div class="mainTitle">Resources</div>
@@ -39,18 +38,26 @@
         </div>
       </div>
     </div>
+    <div class="lists">
+      <div class="mainTitle">Team</div>
+      <div class="itemTeam" >
+        <div class="itemLeft" v-for="index in 6" :key="index">
+          <img src="../../assets/images/1.1.png" @click="router.push({ path: '/teamPage'})" alt="" />
+        </div>
+      </div>
+    </div>
   </el-card>
 </template>
 <script setup>
 // import {getAssetsFile} from "../../utils/index.js";
-import { getHomepageInfo , downloadFile} from "../../utils/intefaceApi.js";
+import { getHomepageInfo, downloadFile } from "../../utils/intefaceApi.js";
 import { useUserStore } from "../../stores/user.js";
 import { downloadApi } from "../../utils/index.js";
 const Store = useUserStore();
 const router = useRouter();
 const route = useRoute();
-console.log(route.name,"route")
-Store.routeName = route.name
+console.log(route.name, "route");
+Store.routeName = route.name;
 let homeImages = ref([]);
 let odaProducts = ref([]);
 let homeIntroductionStr = ref();
@@ -83,7 +90,7 @@ const isLogin = (item) => {
     }, 1500);
   } else {
     const url = `/api/product/download/${item.id}`; // 下载文件的url
-     downloadFile(url).then(res=>{
+    downloadFile(url).then((res) => {
       downloadApi(res);
     });
   }
@@ -108,7 +115,7 @@ async function fetchData() {
     let response = await getHomepageInfo();
     homeImages.value = response.data.homeImages;
     homeIntroductionStr.value = response.data.homeIntroductionStr;
-    odaProducts.value =response.data.odaProducts
+    odaProducts.value = response.data.odaProducts;
   } catch (error) {
     console.error("An error occurred:", error);
     throw error;
@@ -118,8 +125,34 @@ async function fetchData() {
 onUnmounted(() => window.removeEventListener("scroll", scroll));
 </script>
 <style lang="less" scoped>
-
-
+.itemTeam {
+  display: grid;
+  justify-content: space-between;
+  grid-template-columns: repeat(auto-fill, 15%);
+  align-items: center;
+  flex-wrap: wrap;
+  
+  .itemLeft {
+    margin-bottom: 20px;
+    img {
+      width: 75px;
+      height: 75px;
+      border-radius: 50%;
+      border: 2px solid rgba(64, 149, 229, 1);
+      cursor: pointer;
+    }
+  }
+  .itemRight {
+    color: rgba(64, 149, 229, 1);
+    font-size: 16px;
+    overflow: hidden;
+    -webkit-line-clamp: 3;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    line-height: 2;
+  }
+}
 
 .loadItem {
   position: absolute;
@@ -190,7 +223,7 @@ onUnmounted(() => window.removeEventListener("scroll", scroll));
 }
 
 .introduction {
-  padding: 41px 20% 38px ;
+  padding: 41px 20% 38px;
   .mainTitle {
     color: rgba(64, 149, 229, 1);
     font-size: 28px;
@@ -209,7 +242,7 @@ onUnmounted(() => window.removeEventListener("scroll", scroll));
   }
 }
 .lists {
-  padding: 41px 20% 38px ;
+  padding: 41px 20% 38px;
   position: relative;
   .mainTitle {
     font-weight: 700;
