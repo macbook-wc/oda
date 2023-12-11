@@ -34,6 +34,11 @@
           <img class="imgSmall" :src="productDetail.imgUrl" alt="" />
         </el-col>
       </el-row>
+      <el-row :gutter="24">
+        <el-col :span="24">
+          <img src="../../assets/images/newImg2.png" alt="" />
+        </el-col>
+      </el-row>
     </el-card>
 
     <el-card class="cardTop">

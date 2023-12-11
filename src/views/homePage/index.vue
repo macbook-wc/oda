@@ -15,6 +15,21 @@
       <div class="mainTitle">Introduction</div>
       <div class="text" v-html="homeIntroductionStr" style="white-space: pre-wrap"></div>
     </div>
+    <div class="introduction">
+      <div class="mainTitle">Objectives</div>
+      <div class="text" >1) Observations. To establish a systematic and long-term observational network in the KOE region focusing on physical and biogeochemical processes, including Kuroshio Extension Mooring System (KEMS), BGC-Argo/Deep Argo arrays and repeated hydrological sections. </div>
+      <div class="text" >2) Understandings. To improve our current understandings of physical and biogeochemical processes in the KOE region through interdisciplinary studies. This involves identifying the key drivers of variability in the climate system and fishery resources within the KOE.</div>
+      <div class="text" >3) Applications. To assess the impacts of the physical and biogeochemical processes in the KOE on climate and fisheries, and to provide a scientific basis for climate prediction and fishery management in the Northwestern Pacific.</div>
+      <div>
+        <img src="../../assets/images/newImg.png" alt="">
+      </div>
+    </div>
+     <div class="introduction">
+      <div class="mainTitle">About ODA-KOER</div>
+      <div class="text" >
+        OUC keeps developing the long-term systematic multidisciplinary observation system, which includes KEMS, mobile platforms, repeated hydrological sections, etc. We also create an open-source multidisciplinary dataset and the observational data will be integrated and publicly available to the science community via Observation Data Access for Kuroshio-Oyashio Extension Region (ODA-KOER). 
+      </div>
+    </div>
     <div class="lists">
       <div class="mainTitle">Resources</div>
       <div v-for="(item, index) in odaProducts" :key="index" class="listItems">
