@@ -22,6 +22,29 @@
       <el-row :gutter="24" class="overview">
         <el-col :span="18">
           <div class="viewLeft">
+            <div class="viewTitle">Subsurface Moorings</div>
+            <div
+              class="viewContent"
+            >
+            The subsurface mooring array currently consists of 5 subsurface moorings, numbered M1-M5 in chronological order of their deployment. Each year, a new mooring with instruments of the same specifications replaced the old one. The routine hydrographic moorings M1-M4 each equipped with two 75 kHz WorkHorse ADCPs, four SeaBird 37-SM CTDs, three Aquadopp-DW/Seaguard-RCM current meters and a chain of SeaBird56 temperature loggers. 
+            </div>
+          </div>
+        </el-col>
+        <el-col :span="2">
+          <img class="imgSmall" :src="productDetail.imgUrl" alt="" />
+        </el-col>
+      </el-row>
+      <!-- <el-row :gutter="24">
+        <el-col :span="24">
+          <img src="../../assets/images/newImg2.png" alt="" />
+        </el-col>
+      </el-row> -->
+    </el-card>
+
+    <el-card class="cardTop">
+      <el-row :gutter="24" class="overview">
+        <el-col :span="18">
+          <div class="viewLeft">
             <div class="viewTitle">Details</div>
             <div
               class="viewContent"
@@ -31,14 +54,14 @@
           </div>
         </el-col>
         <el-col :span="2">
-          <img class="imgSmall" :src="productDetail.imgUrl" alt="" />
+          <img class="imgSmall" src="../../assets/images/newImg2.png" alt="" />
         </el-col>
       </el-row>
-      <el-row :gutter="24">
+      <!-- <el-row :gutter="24">
         <el-col :span="24">
           <img src="../../assets/images/newImg2.png" alt="" />
         </el-col>
-      </el-row>
+      </el-row> -->
     </el-card>
 
     <el-card class="cardTop">
