@@ -23,10 +23,13 @@
         <el-col :span="18">
           <div class="viewLeft">
             <div class="viewTitle">Subsurface Moorings</div>
-            <div
-              class="viewContent"
-            >
-            The subsurface mooring array currently consists of 5 subsurface moorings, numbered M1-M5 in chronological order of their deployment. Each year, a new mooring with instruments of the same specifications replaced the old one. The routine hydrographic moorings M1-M4 each equipped with two 75 kHz WorkHorse ADCPs, four SeaBird 37-SM CTDs, three Aquadopp-DW/Seaguard-RCM current meters and a chain of SeaBird56 temperature loggers. 
+            <div class="viewContent">
+              The subsurface mooring array currently consists of 5 subsurface moorings,
+              numbered M1-M5 in chronological order of their deployment. Each year, a new
+              mooring with instruments of the same specifications replaced the old one.
+              The routine hydrographic moorings M1-M4 each equipped with two 75 kHz
+              WorkHorse ADCPs, four SeaBird 37-SM CTDs, three Aquadopp-DW/Seaguard-RCM
+              current meters and a chain of SeaBird56 temperature loggers.
             </div>
           </div>
         </el-col>
@@ -91,11 +94,8 @@
             <div class="viewTitle">Publications</div>
             <div class="downloadList">
               <div class="downLoad" v-for="(item, index) in 3" :key="index">
-                <div class="loadItem1"> {{ index + 1 }}:</div>
-                <div
-                  class="downItem1"
-                  
-                >XXXXXX</div>
+                <div class="loadItem1">{{ index + 1 }}:</div>
+                <div class="downItem1">XXXXXX</div>
               </div>
             </div>
           </div>
@@ -103,6 +103,27 @@
       </el-row>
     </el-card>
   </div>
+
+    <el-dialog v-model="dialogFormVisible" width="35%" title="提交审核" center> 
+      <el-form :model="form" >
+        <el-form-item label="请输入邮箱:" :rules="[
+        {
+          required: true,
+          message: 'Please input email',
+          trigger: 'blur',
+        }]">
+          <el-input v-model="form.email" autocomplete="off" placeholder="Please input email" />
+        </el-form-item>
+      </el-form>
+      <div class="tips">提示：审核通过后，附件发送到当前邮箱。</div>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button type="primary" class="btn_sub"  @click="dialogFormVisible = false" size="large">
+            确认
+          </el-button>
+        </span>
+      </template>
+    </el-dialog>
 </template>
 
 <script setup>
@@ -115,6 +136,17 @@ const route = useRoute();
 Store.routeName = route.name;
 const productDetail = ref([]);
 const downLoadList = ref([]);
+const rules = reactive({
+  email: [
+    { required: true, message: 'Please input email', trigger: 'blur' },
+  ],
+})
+const form = reactive({
+  name: '',
+  region: '',
+})
+const formLabelWidth = '140px'
+const dialogFormVisible = ref(false);
 let productId = ref(router.currentRoute.value.query.productId);
 onMounted(() => {
   getDetail();
@@ -133,10 +165,11 @@ const isLogin = (item) => {
       });
     }, 1500);
   } else {
-    const url = `/api/product/download/${item.id}`; // 下载文件的url
-    downloadFile(url).then((res) => {
-      downloadApi(res);
-    });
+    dialogFormVisible.value = true;
+    // const url = `/api/product/download/${item.id}`; // 下载文件的url
+    // downloadFile(url).then((res) => {
+    //   downloadApi(res);
+    // });
   }
 };
 async function getDetail() {
@@ -152,17 +185,24 @@ async function getDetail() {
 </script>
 
 <style lang="less" scoped>
-.cardTop{
+.cardTop {
   margin-top: 20px;
-
 }
-
+:deep(.btn_sub){
+  width: 90px !important;
+}
 .bgImg {
   // background-image: url("../../assets/images/bg.png");
   // background-size: cover;
   // background-repeat: no-repeat;
   // min-height: calc(100vh - 100px);
   padding: 54px 20%;
+}
+.tips{
+  color: rgba(16, 16, 16, 1);
+    font-size: 16px;
+    font-family: SourceHanSansSC-regular;
+    margin-top: 40px;
 }
 .downLoad {
   display: flex;
