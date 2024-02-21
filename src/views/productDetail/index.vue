@@ -104,26 +104,7 @@
     </el-card>
   </div>
 
-    <el-dialog v-model="dialogFormVisible" width="35%" title="提交审核" center> 
-      <el-form :model="form" >
-        <el-form-item label="请输入邮箱:" :rules="[
-        {
-          required: true,
-          message: 'Please input email',
-          trigger: 'blur',
-        }]">
-          <el-input v-model="form.email" autocomplete="off" placeholder="Please input email" />
-        </el-form-item>
-      </el-form>
-      <div class="tips">提示：审核通过后，附件发送到当前邮箱。</div>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button type="primary" class="btn_sub"  @click="dialogFormVisible = false" size="large">
-            确认
-          </el-button>
-        </span>
-      </template>
-    </el-dialog>
+    
 </template>
 
 <script setup>
@@ -152,25 +133,33 @@ onMounted(() => {
   getDetail();
 });
 const isLogin = (item) => {
-  if (!Store.userInfo.token) {
-    ElMessage({
-      showClose: true,
-      message: "Warning, pleace login",
-      type: "warning",
-      duration: 1500,
-    });
-    setTimeout(() => {
-      router.push({
-        path: "/login",
-      });
-    }, 1500);
-  } else {
-    dialogFormVisible.value = true;
+  debugger
+  router.push({
+    path: "/downLoadChangePage",
+    query:{
+      productId:item.productId,
+      productTitle:item.downloadTitle
+    }
+  })
+  // if (!Store.userInfo.token) {
+  //   ElMessage({
+  //     showClose: true,
+  //     message: "Warning, pleace login",
+  //     type: "warning",
+  //     duration: 1500,
+  //   });
+  //   setTimeout(() => {
+  //     router.push({
+  //       path: "/login",
+  //     });
+  //   }, 1500);
+  // } else {
+  //   dialogFormVisible.value = true;
     // const url = `/api/product/download/${item.id}`; // 下载文件的url
     // downloadFile(url).then((res) => {
     //   downloadApi(res);
     // });
-  }
+  // }
 };
 async function getDetail() {
   try {

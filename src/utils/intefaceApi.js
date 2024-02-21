@@ -9,3 +9,5 @@ export const downloadFile = (url) => axios({
 });
 export const register = (p) => post('/api/user/register', p,true);
 export const login = (p) =>post('/api/user/login', p, false);
+export const getCheckData = () =>get('/api/product/dataRequest');
+export const submitDataRequest = (p) =>post('/api/product/dataRequest',p, true);

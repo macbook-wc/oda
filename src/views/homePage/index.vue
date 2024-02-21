@@ -14,13 +14,16 @@
     <div class="introduction">
       <div class="mainTitle">Introduction</div>
       <div class="text" v-html="homeIntroductionStr" style="white-space: pre-wrap"></div>
+      <div class="img_box">
+        <img src="../../assets/images/newImg.png" alt="">
+      </div>
     </div>
     <div class="introduction">
       <div class="mainTitle">Objectives</div>
       <div class="text" >1) Observations. To establish a systematic and long-term observational network in the KOE region focusing on physical and biogeochemical processes, including Kuroshio Extension Mooring System (KEMS), BGC-Argo/Deep Argo arrays and repeated hydrological sections. </div>
       <div class="text" >2) Understandings. To improve our current understandings of physical and biogeochemical processes in the KOE region through interdisciplinary studies. This involves identifying the key drivers of variability in the climate system and fishery resources within the KOE.</div>
       <div class="text" >3) Applications. To assess the impacts of the physical and biogeochemical processes in the KOE on climate and fisheries, and to provide a scientific basis for climate prediction and fishery management in the Northwestern Pacific.</div>
-      <div>
+      <div class="img_box">
         <img src="../../assets/images/newImg.png" alt="">
       </div>
     </div>
@@ -152,7 +155,11 @@ onUnmounted(() => window.removeEventListener("scroll", scroll));
     line-height: 2;
   }
 }
-
+.img_box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .loadItem {
   position: absolute;
   right: 25px;
@@ -226,11 +233,12 @@ onUnmounted(() => window.removeEventListener("scroll", scroll));
   .mainTitle {
     color: rgba(64, 149, 229, 1);
     font-size: 28px;
-    text-align: left;
+    text-align: center;
     font-family: SourceHanSansSC-bold;
     height: 62px;
     margin-bottom: 7px;
     font-weight: 700;
+
   }
   .text {
     color: rgba(64, 149, 229, 1);
@@ -247,7 +255,7 @@ onUnmounted(() => window.removeEventListener("scroll", scroll));
     font-weight: 700;
     color: rgba(64, 149, 229, 1);
     font-size: 28px;
-    text-align: left;
+    text-align: center;
     font-family: SourceHanSansSC-bold;
     height: 62px;
   }

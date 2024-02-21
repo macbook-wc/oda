@@ -43,6 +43,14 @@ const router = createRouter({
         title:"ODA-teamPage"
       }
     }
+    , {
+      path: '/downLoadChangePage',
+      name: 'downLoadChangePage',
+      component: () => import('../views/downLoadChangePage/index.vue'),
+      meta:{
+        title:"downLoadChangePage"
+      }
+    }
   ]
 })
 router.beforeEach((to, from, next) => {

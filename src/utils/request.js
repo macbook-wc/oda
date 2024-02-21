@@ -144,6 +144,7 @@ export function post(url, params = {}, json = false) {
     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
   };
   return new Promise((resolve, reject) => {
+    debugger
     axios
       .post(url, json ? JSON.stringify(params) : QS.stringify(params), {
         headers: json ? headerJSON : headerFormData
