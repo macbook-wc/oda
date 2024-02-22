@@ -3,25 +3,17 @@
     <el-card class="cardTop">
       <div class="introduction">
         <div class="mainTitle">Data Request</div>
-        <div class="text" style="white-space: pre-wrap">
-          预留标题位置，
-          预留标题位置，
-          预留标题位置，
-          预留标题位置，
-          预留标题位置，
-          预留标题位置，
-        </div>
       </div>
       <!-- 循环产品 -->
-      <div class="introduction" v-for="(item, index) in checkData">
-        <el-form :model="form" :key="index" ref="formRef">
-          <div v-for="(ite, ind) in item.labelList">
-            <div class="mainTitle" :key="ind">{{ ite.productTitle }}</div>
+      <el-form :model="form" ref="formRef">
+        <div class="introduction" v-for="(item, index) in checkData">
+          <div class="text" style="white-space: pre-wrap">
+          {{ item.productTitle }}
+        </div>
+          <!-- <el-form :model="form" :key="index" ref="formRef"> -->
+          <div v-for="(ite, ind) in item.labelList" class="check_content">
             <el-form-item :label="ite.category" :key="ind">
-              <el-checkbox-group
-                v-model="form[ind].labelList"
-                @change="handleCheckboxChange(ind)"
-              >
+              <el-checkbox-group v-model="form[index].labelList[ind].labelList">
                 <div v-for="(it, i) in ite.labelList">
                   <el-checkbox :label="it" :name="it" :key="i" />
                 </div>
@@ -29,13 +21,16 @@
             </el-form-item>
             <el-form-item
               label="选择时间"
-              style="margin-left: 20px"
               :key="ind"
-              :rules="form[ind].dateRules"
+              :rules="{
+                required: form[index].labelList[ind].labelList.length ? true : false,
+                message: '请选择开始结束时间',
+                trigger: 'blur',
+              }"
             >
               <div class="block">
                 <el-date-picker
-                  v-model="form[ind].itemDate"
+                  v-model="form[index].labelList[ind].itemDate"
                   type="monthrange"
                   range-separator="To"
                   start-placeholder="Start month"
@@ -47,15 +42,59 @@
               </div>
             </el-form-item>
           </div>
-          <div class="sub_btn">
-            <el-button type="primary" @click="submitForm(formRef)">确认</el-button>
-          </div>
-        </el-form>
-      </div>
+        </div>
+        <div class="sub_btn">
+          <el-button type="primary" @click="submitForm(formRef)">确认</el-button>
+        </div>
+      </el-form>
     </el-card>
   </div>
-  <el-dialog v-model="dialogFormVisible" width="55%" title="提交审核" center>
-    <div class="introduction_model" v-for="(item, index) in checkData">
+  <el-dialog v-model="dialogFormVisible" width="80%" title="提交审核" center>
+    <el-form :model="form" ref="formRef">
+        <div class="introduction_model" v-for="(item, index) in checkData">
+          <div class="text" style="white-space: pre-wrap" >
+              {{ item.productTitle }}
+           </div>
+          <!-- <el-form :model="form" :key="index" ref="formRef"> -->
+          <div v-for="(ite, ind) in item.labelList" class="check_content" >
+            <el-form-item :label="ite.category" :key="ind"  >
+              <el-checkbox-group v-model="form[index].labelList[ind].labelList">
+                <div v-for="(it, i) in ite.labelList">
+                  <el-checkbox  :disabled="isDisable" :label="it" :name="it" :key="i" />
+                </div>
+              </el-checkbox-group>
+            </el-form-item>
+            <el-form-item
+              label="选择时间"
+              style="margin-left: 20px"
+              :key="ind"
+              :rules="{
+                required: form[index].labelList[ind].labelList.length ? true : false,
+                message: '请选择开始结束时间',
+                trigger: 'blur',
+              }"
+            >
+              <div class="block">
+                <el-date-picker
+                :disabled="isDisable"
+                  v-model="form[index].labelList[ind].itemDate"
+                  type="monthrange"
+                  range-separator="To"
+                  start-placeholder="Start month"
+                  end-placeholder="End month"
+                  value-format="YYYY-MM"
+                  unlink-panels
+                />
+                <!-- disabled-date="(form[ind].itemStartDate,form[ind].itemEndDate)=>disabledDate(time,form[ind].itemStartDate,form[ind].itemEndDate)" -->
+              </div>
+            </el-form-item>
+          </div>
+        </div>
+        <!-- <div class="sub_btn">
+          <el-button type="primary" @click="submitForm(formRef)">确认</el-button>
+        </div> -->
+      </el-form>
+    <!-- <div class="introduction_model" v-for="(item, index) in checkData">
       <el-form :model="form" :key="index" class="demo-ruleForm">
         <div v-for="(ite, ind) in item.labelList">
           <div
@@ -97,11 +136,13 @@
           </el-form-item>
         </div>
       </el-form>
-    </div>
+    </div> -->
     <el-form ref="formRef" :model="formData" class="demo-ruleForm introduction_model">
       <div class="name">
         <el-form-item
           prop="firstName"
+          label-width="100"
+          label="name"
           :rules="[{ required: true, message: 'First name is required' }]"
         >
           <div class="iconInput nameForm">
@@ -134,6 +175,8 @@
 
       <el-form-item
         prop="email"
+        label="email"
+        label-width="100"
         :rules="[{ required: true, message: 'Email is required' }]"
       >
         <div class="iconInput">
@@ -148,6 +191,8 @@
       </el-form-item>
       <el-form-item
         prop="country"
+        label-width="100"
+        label="country"
         :rules="[{ required: true, message: 'country is required' }]"
       >
         <div class="iconInput">
@@ -176,6 +221,8 @@
       </el-form-item> -->
       <el-form-item
         prop="organization"
+        label="organization"
+        label-width="100"
         :rules="[{ required: true, message: 'organization is required' }]"
       >
         <div class="iconInput">
@@ -190,6 +237,8 @@
       </el-form-item>
       <el-form-item
         prop="researchField"
+        label="researchField"
+        label-width="100"
         :rules="[{ required: true, message: 'researchField field is required' }]"
       >
         <div class="iconInput">
@@ -221,12 +270,12 @@ const formRef = ref();
 const route = useRoute();
 
 let formData = reactive({
-  firstName: "",
-  lastName: "",
-  email: "",
-  country: "",
-  organization: "",
-  researchField: "",
+  firstName: "1",
+  lastName: "2",
+  email: "123@163.com",
+  country: "4",
+  organization: "5",
+  researchField: "6",
 });
 const focusDate = (datePicker) => {};
 // 自定义的 disabledDate 方法，控制禁用日期的逻辑
@@ -247,9 +296,10 @@ onBeforeMount(() => {
 const submitForm = (formEl) => {
   if (!formEl) return;
   let i = 0;
-
   let isNull = form.every((item, index) => {
-    return item.labelList.length == 0;
+    return item.labelList.every((int) => {
+      return int.labelList.length == 0;
+    });
   });
   if (isNull) {
     ElMessage({
@@ -260,16 +310,27 @@ const submitForm = (formEl) => {
     });
     return;
   }
-  while (i < form.length) {
-    if (form[i].labelList.length > 0 && form[i].itemDate.length == 0) {
-      ElMessage({
-        message: `${form[i].category}类型，请选择开始结束时间！`,
-        showClose: true,
-        type: "warning",
-        duration: 2000,
-      });
-      break;
+  outerLoop : while (i < form.length) {
+    let index = 0;
+    while (index < form[i].labelList.length) {
+      console.log(form[i].labelList[index].labelList.length)
+      if (
+        form[i].labelList[index].labelList.length > 0 &&
+        form[i].labelList[index].itemDate.length == 0
+      ) {
+      console.log(789);
+        ElMessage({
+          message: `${form[i].labelList[index].category}类型，请选择开始结束时间！`,
+          showClose: true,
+          type: "warning",
+          duration: 2000,
+        });
+        break outerLoop;
+      }
+      console.log(123);
+      index++
     }
+    console.log(456);
     i++;
   }
   if (i == form.length) {
@@ -285,20 +346,21 @@ const handleCheckboxChange = (index) => {
 
 async function submit() {
   let formFormate = [];
+  let odaProductDataVoIns = []
   form.forEach((item) => {
-    let obj = {};
-    if (item.labelList.length > 0) {
-      obj.itemStartDate = item.itemDate[0].replace("-", " ");
-      obj.itemEndDate = item.itemDate[1].replace("-", " ");
-      obj.labelList = item.labelList;
-      obj.category = item.category;
-
-      formFormate.push(obj);
-    }
+    let obj ={categoryList:[]}
+    item.labelList.forEach(ite=>{
+      let obj1 = {}
+      if(ite.labelList.length>0){
+        obj.productId = item.productId
+        obj.productTitle = item.productTitle
+        obj1 = {category:ite.category,itemStartDate:ite.itemDate[0].replace("-", " "),itemEndDate:ite.itemDate[1].replace("-", " "),labelList:ite.labelList}
+        obj.categoryList.push(obj1) 
+      }
+    })
+    odaProductDataVoIns.push(obj)
   });
-  const productId = route.query.productId;
-  const productTitle = route.query.productTitle;
-  let odaProductDataVoIns = [{ productId, productTitle, categoryList: formFormate }];
+  console.log(odaProductDataVoIns,"--odaProductDataVoIns--");
   let userVoIn = formData;
   let odaDateRequestVoIn = { odaProductDataVoIns, userVoIn };
   let response = await submitDataRequest(odaDateRequestVoIn);
@@ -310,11 +372,12 @@ async function submit() {
       type: "success",
       duration: 2000,
     });
-    console.log(form, "--form--");
+  //   console.log(form, "--form--");
     form.forEach((item) => {
-      item.dateRules = [];
-      item.itemDate = [];
-      item.labelList = [];
+      item.labelList.forEach(ite=>{
+          ite.itemDate = []
+          ite.labelList = []
+      })
     });
     for (const key in formData) {
       if (Object.hasOwnProperty.call(formData, key)) {
@@ -328,23 +391,26 @@ async function fetchData() {
     let response = await getCheckData();
     checkData.value = response.data;
     checkData.value.forEach((item) => {
+      let obj = {
+        labelList: [],
+        productId: item.productId,
+        productTitle: item.productTitle,
+      };
       item.labelList.forEach((ite, ind) => {
-        let obj = { itemDate: [] };
+        let obj1 = { itemDate: [] };
         for (let key in ite) {
           if (ite.hasOwnProperty(key)) {
-            // Object.prototype.toString.call(ite[key]) == "[object Array]"
-            //   ? (obj[key] = [])
-            //   : key == "category"
-            //   ? (obj[key] = ite[key])
-            //   : "";
-            obj.labelList = [];
-            obj.category = ite.category;
-            obj.itemStartDate = ite.itemStartDate;
-            obj.itemEndDate = ite.itemEndDate;
+            obj1.labelList = [];
+            obj1.category = ite.category ? ite.category : item.productTitle ;
+            obj1.itemStartDate = ite.itemStartDate;
+            obj1.itemEndDate = ite.itemEndDate;
+            obj1.itemEndDate = ite.itemEndDate;
+            // itemStartDate:item.itemStartDate,itemEndDate:item.itemEndDate,category:item.category
           }
         }
-        form.push(obj);
+        obj.labelList.push(obj1);
       });
+      form.push(obj);
     });
     console.log(form, "--form--");
   } catch (error) {
@@ -359,6 +425,12 @@ const resetForm = (formEl) => {
 </script>
 
 <style lang="less" scoped>
+.el-checkbox__label {
+    display: inline-block;
+    margin:0 6px !important;
+    line-height: 1;
+    font-size: var(--el-checkbox-font-size);
+}
 .sub_btn {
   display: flex;
   justify-content: center;
@@ -368,7 +440,7 @@ const resetForm = (formEl) => {
   align-items: center;
 }
 .introduction_model {
-  padding: 41px 5% 38px;
+  padding: 0px 6% ;
   .mainTitle {
     color: rgba(64, 149, 229, 1);
     font-size: 28px;
@@ -378,16 +450,17 @@ const resetForm = (formEl) => {
     margin-bottom: 7px;
     font-weight: 700;
   }
-  .text {
-    color: rgba(64, 149, 229, 1);
-    font-size: 16px;
-    text-align: left;
-    font-family: SourceHanSansSC-regular;
-    line-height: 2.5;
-  }
+}
+
+.text {
+  color: rgba(64, 149, 229, 1);
+  font-size: 16px;
+  text-align: left;
+  font-family: SourceHanSansSC-regular;
+  line-height: 2.5;
 }
 .introduction {
-  padding: 41px 18% 38px;
+  padding: 0px 18% ;
   .mainTitle {
     color: rgba(64, 149, 229, 1);
     font-size: 28px;
@@ -451,5 +524,9 @@ const resetForm = (formEl) => {
     margin-right: 16px;
     margin-left: 20px;
   }
+}
+.el-checkbox-group{
+  display: flex;
+  flex-wrap: wrap;
 }
 </style>
