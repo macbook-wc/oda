@@ -318,7 +318,6 @@ const submitForm = (formEl) => {
         form[i].labelList[index].labelList.length > 0 &&
         form[i].labelList[index].itemDate.length == 0
       ) {
-      console.log(789);
         ElMessage({
           message: `${form[i].labelList[index].category}类型，请选择开始结束时间！`,
           showClose: true,
@@ -327,10 +326,8 @@ const submitForm = (formEl) => {
         });
         break outerLoop;
       }
-      console.log(123);
       index++
     }
-    console.log(456);
     i++;
   }
   if (i == form.length) {
