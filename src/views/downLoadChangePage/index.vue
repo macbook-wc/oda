@@ -4,12 +4,12 @@
       <div class="introduction">
         <div class="mainTitle">Data Request</div>
         <div class="text" style="white-space: pre-wrap">
-          This website provides data for scientific research purposes and can be
-          downloaded for free. Please select the variable names and the time period below,
-          and click the submit button to generate a request form that will be sent to the
-          data center. We will notify you via email within 3-5 business days with a data
-          link. Please note that the personal information collected on this website will
-          only be used for the purpose of reviewing data requests.
+          预留标题位置，
+          预留标题位置，
+          预留标题位置，
+          预留标题位置，
+          预留标题位置，
+          预留标题位置，
         </div>
       </div>
       <!-- 循环产品 -->
@@ -43,12 +43,13 @@
                   value-format="YYYY-MM"
                   unlink-panels
                 />
+                <!-- disabled-date="(form[ind].itemStartDate,form[ind].itemEndDate)=>disabledDate(time,form[ind].itemStartDate,form[ind].itemEndDate)" -->
               </div>
             </el-form-item>
           </div>
-          <el-form-item class="sub_btn">
+          <div class="sub_btn">
             <el-button type="primary" @click="submitForm(formRef)">确认</el-button>
-          </el-form-item>
+          </div>
         </el-form>
       </div>
     </el-card>
@@ -219,17 +220,27 @@ const isDisable = ref(true);
 const formRef = ref();
 const route = useRoute();
 
-const formData = reactive({
-  firstName: "1",
-  lastName: "2",
-  email: "cw_2211589@163.com",
-  country: "123",
-  organization: "2",
-  researchField: "2",
+let formData = reactive({
+  firstName: "",
+  lastName: "",
+  email: "",
+  country: "",
+  organization: "",
+  researchField: "",
 });
 const focusDate = (datePicker) => {};
+// 自定义的 disabledDate 方法，控制禁用日期的逻辑
+const disabledDate = (current, start, end) => {
+  // 获取当前选择的月份
+  const selectedMonth = new Date(current).getMonth();
+  const selectedYear = new Date(current).getFullYear();
+  let select = Number(selectedYear + selectedMonth);
+  start = Number(start.replace("-", ""));
+  end = Number(end.replace("-", ""));
+  return start < select < end ? true : false;
+};
 
-const form = reactive([]);
+let form = reactive([]);
 onBeforeMount(() => {
   fetchData();
 });
@@ -250,19 +261,18 @@ const submitForm = (formEl) => {
     return;
   }
   while (i < form.length) {
-    console.log(form[i],"form[i].");
     if (form[i].labelList.length > 0 && form[i].itemDate.length == 0) {
       ElMessage({
-        message: `${form[i].category}类型下，请选择时间！`,
+        message: `${form[i].category}类型，请选择开始结束时间！`,
         showClose: true,
         type: "warning",
         duration: 2000,
       });
       break;
-    } 
+    }
     i++;
   }
-  if(i == form.length){
+  if (i == form.length) {
     dialogFormVisible.value = true;
   }
 };
@@ -282,6 +292,7 @@ async function submit() {
       obj.itemEndDate = item.itemDate[1].replace("-", " ");
       obj.labelList = item.labelList;
       obj.category = item.category;
+
       formFormate.push(obj);
     }
   });
@@ -299,6 +310,17 @@ async function submit() {
       type: "success",
       duration: 2000,
     });
+    console.log(form, "--form--");
+    form.forEach((item) => {
+      item.dateRules = [];
+      item.itemDate = [];
+      item.labelList = [];
+    });
+    for (const key in formData) {
+      if (Object.hasOwnProperty.call(formData, key)) {
+        formData[key] = "";
+      }
+    }
   }
 }
 async function fetchData() {
@@ -310,16 +332,21 @@ async function fetchData() {
         let obj = { itemDate: [] };
         for (let key in ite) {
           if (ite.hasOwnProperty(key)) {
-            Object.prototype.toString.call(ite[key]) == "[object Array]"
-              ? (obj[key] = [])
-              : key == "category"
-              ? (obj[key] = ite[key])
-              : "";
+            // Object.prototype.toString.call(ite[key]) == "[object Array]"
+            //   ? (obj[key] = [])
+            //   : key == "category"
+            //   ? (obj[key] = ite[key])
+            //   : "";
+            obj.labelList = [];
+            obj.category = ite.category;
+            obj.itemStartDate = ite.itemStartDate;
+            obj.itemEndDate = ite.itemEndDate;
           }
         }
         form.push(obj);
       });
     });
+    console.log(form, "--form--");
   } catch (error) {
     console.error("An error occurred:", error);
     throw error;
@@ -364,7 +391,7 @@ const resetForm = (formEl) => {
   .mainTitle {
     color: rgba(64, 149, 229, 1);
     font-size: 28px;
-    text-align: center;
+    text-align: left;
     font-family: SourceHanSansSC-bold;
     height: 62px;
     margin-bottom: 7px;

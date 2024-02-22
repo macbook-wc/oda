@@ -23,9 +23,9 @@
       <div class="text" >1) Observations. To establish a systematic and long-term observational network in the KOE region focusing on physical and biogeochemical processes, including Kuroshio Extension Mooring System (KEMS), BGC-Argo/Deep Argo arrays and repeated hydrological sections. </div>
       <div class="text" >2) Understandings. To improve our current understandings of physical and biogeochemical processes in the KOE region through interdisciplinary studies. This involves identifying the key drivers of variability in the climate system and fishery resources within the KOE.</div>
       <div class="text" >3) Applications. To assess the impacts of the physical and biogeochemical processes in the KOE on climate and fisheries, and to provide a scientific basis for climate prediction and fishery management in the Northwestern Pacific.</div>
-      <div class="img_box">
+      <!-- <div class="img_box">
         <img src="../../assets/images/newImg.png" alt="">
-      </div>
+      </div> -->
     </div>
      <div class="introduction">
       <div class="mainTitle">About ODA-KOER</div>
@@ -233,7 +233,7 @@ onUnmounted(() => window.removeEventListener("scroll", scroll));
   .mainTitle {
     color: rgba(64, 149, 229, 1);
     font-size: 28px;
-    text-align: center;
+    text-align: left;
     font-family: SourceHanSansSC-bold;
     height: 62px;
     margin-bottom: 7px;
@@ -255,7 +255,7 @@ onUnmounted(() => window.removeEventListener("scroll", scroll));
     font-weight: 700;
     color: rgba(64, 149, 229, 1);
     font-size: 28px;
-    text-align: center;
+    text-align: left;
     font-family: SourceHanSansSC-bold;
     height: 62px;
   }
