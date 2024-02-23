@@ -8,8 +8,8 @@
       <el-form :model="form" ref="formRef">
         <div class="introduction" v-for="(item, index) in checkData">
           <div class="text" style="white-space: pre-wrap">
-          {{ item.productTitle }}
-        </div>
+            {{ item.productTitle }}
+          </div>
           <!-- <el-form :model="form" :key="index" ref="formRef"> -->
           <div v-for="(ite, ind) in item.labelList" class="check_content">
             <el-form-item :label="ite.category" :key="ind">
@@ -37,10 +37,17 @@
                   end-placeholder="End month"
                   value-format="YYYY-MM"
                   unlink-panels
+                  @focus="
+                    focus(
+                      form[index].labelList[ind].itemStartDate,
+                      form[index].labelList[ind].itemEndDate
+                    )
+                  "
                 />
-                <!-- disabled-date="(form[ind].itemStartDate,form[ind].itemEndDate)=>disabledDate(time,form[ind].itemStartDate,form[ind].itemEndDate)" -->
               </div>
             </el-form-item>
+            <!-- :disabled-date="disabledDate" -->
+
           </div>
         </div>
         <div class="sub_btn">
@@ -51,49 +58,49 @@
   </div>
   <el-dialog v-model="dialogFormVisible" width="80%" title="提交审核" center>
     <el-form :model="form" ref="formRef">
-        <div class="introduction_model" v-for="(item, index) in checkData">
-          <div class="text" style="white-space: pre-wrap" >
-              {{ item.productTitle }}
-           </div>
-          <!-- <el-form :model="form" :key="index" ref="formRef"> -->
-          <div v-for="(ite, ind) in item.labelList" class="check_content" >
-            <el-form-item :label="ite.category" :key="ind"  >
-              <el-checkbox-group v-model="form[index].labelList[ind].labelList">
-                <div v-for="(it, i) in ite.labelList">
-                  <el-checkbox  :disabled="isDisable" :label="it" :name="it" :key="i" />
-                </div>
-              </el-checkbox-group>
-            </el-form-item>
-            <el-form-item
-              label="选择时间"
-              style="margin-left: 20px"
-              :key="ind"
-              :rules="{
-                required: form[index].labelList[ind].labelList.length ? true : false,
-                message: '请选择开始结束时间',
-                trigger: 'blur',
-              }"
-            >
-              <div class="block">
-                <el-date-picker
-                :disabled="isDisable"
-                  v-model="form[index].labelList[ind].itemDate"
-                  type="monthrange"
-                  range-separator="To"
-                  start-placeholder="Start month"
-                  end-placeholder="End month"
-                  value-format="YYYY-MM"
-                  unlink-panels
-                />
-                <!-- disabled-date="(form[ind].itemStartDate,form[ind].itemEndDate)=>disabledDate(time,form[ind].itemStartDate,form[ind].itemEndDate)" -->
-              </div>
-            </el-form-item>
-          </div>
+      <div class="introduction_model" v-for="(item, index) in checkData">
+        <div class="text" style="white-space: pre-wrap">
+          {{ item.productTitle }}
         </div>
-        <!-- <div class="sub_btn">
+        <!-- <el-form :model="form" :key="index" ref="formRef"> -->
+        <div v-for="(ite, ind) in item.labelList" class="check_content">
+          <el-form-item :label="ite.category" :key="ind">
+            <el-checkbox-group v-model="form[index].labelList[ind].labelList">
+              <div v-for="(it, i) in ite.labelList">
+                <el-checkbox :disabled="isDisable" :label="it" :name="it" :key="i" />
+              </div>
+            </el-checkbox-group>
+          </el-form-item>
+          <el-form-item
+            label="选择时间"
+            style="margin-left: 20px"
+            :key="ind"
+            :rules="{
+              required: form[index].labelList[ind].labelList.length ? true : false,
+              message: '请选择开始结束时间',
+              trigger: 'blur',
+            }"
+          >
+            <div class="block">
+              <el-date-picker
+                :disabled="isDisable"
+                v-model="form[index].labelList[ind].itemDate"
+                type="monthrange"
+                range-separator="To"
+                start-placeholder="Start month"
+                end-placeholder="End month"
+                value-format="YYYY-MM"
+                unlink-panels
+              />
+              <!-- disabled-date="(form[ind].itemStartDate,form[ind].itemEndDate)=>disabledDate(time,form[ind].itemStartDate,form[ind].itemEndDate)" -->
+            </div>
+          </el-form-item>
+        </div>
+      </div>
+      <!-- <div class="sub_btn">
           <el-button type="primary" @click="submitForm(formRef)">确认</el-button>
         </div> -->
-      </el-form>
+    </el-form>
     <!-- <div class="introduction_model" v-for="(item, index) in checkData">
       <el-form :model="form" :key="index" class="demo-ruleForm">
         <div v-for="(ite, ind) in item.labelList">
@@ -263,36 +270,47 @@
 
 <script setup>
 import { getCheckData, submitDataRequest } from "../../utils/intefaceApi.js";
+import dayjs from "dayjs";
+const isp = ref(true);
+let start = ref("");
+let end = ref("");
 let checkData = ref([]);
 const dialogFormVisible = ref(false);
 const isDisable = ref(true);
 const formRef = ref();
+
 const route = useRoute();
 
 let formData = reactive({
-  firstName: "1",
-  lastName: "2",
-  email: "123@163.com",
-  country: "4",
-  organization: "5",
-  researchField: "6",
+  firstName: "",
+  lastName: "",
+  email: "",
+  country: "",
+  organization: "",
+  researchField: "",
 });
-const focusDate = (datePicker) => {};
-// 自定义的 disabledDate 方法，控制禁用日期的逻辑
-const disabledDate = (current, start, end) => {
-  // 获取当前选择的月份
-  const selectedMonth = new Date(current).getMonth();
-  const selectedYear = new Date(current).getFullYear();
-  let select = Number(selectedYear + selectedMonth);
-  start = Number(start.replace("-", ""));
-  end = Number(end.replace("-", ""));
-  return start < select < end ? true : false;
+let form = reactive([]);
+const disabledDate =()=> {
+  const startDate = dayjs(start.value);
+  const endDate = dayjs(end.value);
+  return (value) => {
+    const targetDate = dayjs(value).startOf("month");
+    const afterStartDate =
+      targetDate.isAfter(startDate) || targetDate.isSame(startDate, "month");
+    const beforeEndDate =
+      targetDate.isBefore(endDate) || targetDate.isSame(endDate, "month");
+    return !(afterStartDate && beforeEndDate);
+  };
 };
 
-let form = reactive([]);
 onBeforeMount(() => {
   fetchData();
 });
+const focus = (s, e) => {
+  start.value = s;
+  end.value = e;
+  // disabledDate()
+};
 const submitForm = (formEl) => {
   if (!formEl) return;
   let i = 0;
@@ -310,10 +328,10 @@ const submitForm = (formEl) => {
     });
     return;
   }
-  outerLoop : while (i < form.length) {
+  outerLoop: while (i < form.length) {
     let index = 0;
     while (index < form[i].labelList.length) {
-      console.log(form[i].labelList[index].labelList.length)
+      console.log(form[i].labelList[index].labelList.length);
       if (
         form[i].labelList[index].labelList.length > 0 &&
         form[i].labelList[index].itemDate.length == 0
@@ -326,7 +344,7 @@ const submitForm = (formEl) => {
         });
         break outerLoop;
       }
-      index++
+      index++;
     }
     i++;
   }
@@ -343,21 +361,26 @@ const handleCheckboxChange = (index) => {
 
 async function submit() {
   let formFormate = [];
-  let odaProductDataVoIns = []
+  let odaProductDataVoIns = [];
   form.forEach((item) => {
-    let obj ={categoryList:[]}
-    item.labelList.forEach(ite=>{
-      let obj1 = {}
-      if(ite.labelList.length>0){
-        obj.productId = item.productId
-        obj.productTitle = item.productTitle
-        obj1 = {category:ite.category,itemStartDate:ite.itemDate[0].replace("-", " "),itemEndDate:ite.itemDate[1].replace("-", " "),labelList:ite.labelList}
-        obj.categoryList.push(obj1) 
+    let obj = { categoryList: [] };
+    item.labelList.forEach((ite) => {
+      let obj1 = {};
+      if (ite.labelList.length > 0) {
+        obj.productId = item.productId;
+        obj.productTitle = item.productTitle;
+        obj1 = {
+          category: ite.category,
+          itemStartDate: ite.itemDate[0].replace("-", " "),
+          itemEndDate: ite.itemDate[1].replace("-", " "),
+          labelList: ite.labelList,
+        };
+        obj.categoryList.push(obj1);
       }
-    })
-    odaProductDataVoIns.push(obj)
+    });
+    odaProductDataVoIns.push(obj);
   });
-  console.log(odaProductDataVoIns,"--odaProductDataVoIns--");
+  console.log(odaProductDataVoIns, "--odaProductDataVoIns--");
   let userVoIn = formData;
   let odaDateRequestVoIn = { odaProductDataVoIns, userVoIn };
   let response = await submitDataRequest(odaDateRequestVoIn);
@@ -369,12 +392,12 @@ async function submit() {
       type: "success",
       duration: 2000,
     });
-  //   console.log(form, "--form--");
+    //   console.log(form, "--form--");
     form.forEach((item) => {
-      item.labelList.forEach(ite=>{
-          ite.itemDate = []
-          ite.labelList = []
-      })
+      item.labelList.forEach((ite) => {
+        ite.itemDate = [];
+        ite.labelList = [];
+      });
     });
     for (const key in formData) {
       if (Object.hasOwnProperty.call(formData, key)) {
@@ -398,7 +421,7 @@ async function fetchData() {
         for (let key in ite) {
           if (ite.hasOwnProperty(key)) {
             obj1.labelList = [];
-            obj1.category = ite.category ? ite.category : item.productTitle ;
+            obj1.category = ite.category ? ite.category : item.productTitle;
             obj1.itemStartDate = ite.itemStartDate;
             obj1.itemEndDate = ite.itemEndDate;
             obj1.itemEndDate = ite.itemEndDate;
@@ -422,11 +445,20 @@ const resetForm = (formEl) => {
 </script>
 
 <style lang="less" scoped>
-.el-checkbox__label {
-    display: inline-block;
-    margin:0 6px !important;
-    line-height: 1;
-    font-size: var(--el-checkbox-font-size);
+:deep(.el-form-item__label) {
+  font-size: 16px !important;
+  color: #333;
+  display: inline-flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  flex: 0 0 auto;
+  height: 32px;
+  line-height: 32px;
+  padding: 0 12px 0 0;
+  box-sizing: border-box;
+}
+:deep(.el-checkbox) {
+  margin: 0 10px !important;
 }
 .sub_btn {
   display: flex;
@@ -437,7 +469,7 @@ const resetForm = (formEl) => {
   align-items: center;
 }
 .introduction_model {
-  padding: 0px 6% ;
+  padding: 0px 6%;
   .mainTitle {
     color: rgba(64, 149, 229, 1);
     font-size: 28px;
@@ -457,7 +489,7 @@ const resetForm = (formEl) => {
   line-height: 2.5;
 }
 .introduction {
-  padding: 0px 18% ;
+  padding: 0px 18%;
   .mainTitle {
     color: rgba(64, 149, 229, 1);
     font-size: 28px;
@@ -522,7 +554,7 @@ const resetForm = (formEl) => {
     margin-left: 20px;
   }
 }
-.el-checkbox-group{
+.el-checkbox-group {
   display: flex;
   flex-wrap: wrap;
 }
